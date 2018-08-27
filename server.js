@@ -3,12 +3,12 @@ const http = require('http')
 let url = require('url')
 const port = 3000
 
-function start(route){
+function start(route, handle){
 	function onRequest(req, res){
 		let pathname = url.parse(req.url).pathname
 		console.log("Request recieved for: ", pathname)
 
-		route(pathname)
+		route(handle, pathname)
 
 		res.writeHead(200, {"Content-Type": "text/plain"})
 		res.write("Hello")
