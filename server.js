@@ -8,11 +8,7 @@ function start(route, handle){
 		let pathname = url.parse(req.url).pathname
 		console.log("Request recieved for: ", pathname)
 
-		route(handle, pathname)
-
-		res.writeHead(200, {"Content-Type": "text/plain"})
-		res.write("Hello")
-		res.end()
+		route(handle, pathname, res)
 	}
 	http.createServer(onRequest).listen(port)
 	console.log("Server started!")
