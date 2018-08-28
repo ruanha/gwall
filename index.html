@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>wall</title>
+	<link rel="stylesheet" type="text/css" href="main.css"> 
+</head>
+<body>
+
+	<div class="container">
+		<div id="wall-app">
+			<div id="wall">
+
+				<img src="images/walls/bedroom.jpg" id="background">
+				<img src="images/compositions/frames1.png" class="frames">
+
+				<div class="menu" id="menu-background">
+					<div class="menu-choice-background">
+						<img src="images/walls/bedroom.jpg" class="menu-choice-background-image">
+					</div>
+					<div class="menu-choice-background">
+						<img src="images/walls/living_room.jpg" class="menu-choice-background-image">
+					</div>
+					<div class="menu-choice-background">
+						<img src="images/walls/office.jpeg" class="menu-choice-background-image">
+					</div>
+					<div class="menu-choice-background">
+						<img src="images/walls/sofa.jpg" class="menu-choice-background-image">
+					</div>
+					<div class="menu-choice-background">
+						<img src="images/walls/empty_wall.jpg" class="menu-choice-background-image">
+					</div>
+				</div>
+				<div class="menu" id="menu-frames"></div>
+				<div class="menu" id="menu-save"></div>
+			</div>
+			<div id="panel">
+				<div class="panel-button" id="set-background" menu="menu-background">
+					Background
+				</div>
+				<div class="panel-button" id="set-frames" menu="menu-frames">
+					Frames
+				</div>
+				<div class="panel-button" id="save" menu="menu-save"></div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="scripts/app.js"></script>
+</html>

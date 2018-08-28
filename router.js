@@ -1,9 +1,17 @@
 "use strict"
 
-function route(handle, pathname, res){
+function route(handle, pathname, res, postData){
 	console.log("About to route a request for ", pathname)
-	if (typeof handle[pathname] === 'function'){
-		handle[pathname](res)
+	let requestedHandler = undefined
+	for (let key in handle){
+		if (handle[key].regex.test(pathname)){
+			requestedHandler = handle[key].handler
+			break
+		}
+	}
+
+	if (typeof requestedHandler === 'function'){
+		requestedHandler(res, pathname, postData)
 	}
 	else {
 		console.log("No request handler found for ", pathname)

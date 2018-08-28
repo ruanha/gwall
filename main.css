@@ -1,0 +1,114 @@
+html, body, div, iframe,
+h1, h2, h3, h4, h5, h6, p, img,
+form, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+body {
+	line-height: 1;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.container{
+}
+
+#wall-app{
+	margin:0 auto;
+	margin-top:1%;
+	width:900px;
+	height:auto;
+}
+
+#wall{
+	position: relative;
+	float:left;
+	width:800px;
+	height:600px;
+}
+
+#wall-background{
+	position: relative;
+	max-width:100%;
+	max-height:100%;
+}
+
+.frames{
+	max-width:100%;
+	max-height:100%;
+	position: absolute;
+	top:0;
+	left:0;
+}
+
+#panel{
+	margin-left:10px;
+	float:left;
+	width:90px;
+	height:600px;
+	background:gray;
+}
+
+.panel-button{
+	height:90px;
+	width:auto;
+	margin: 5px;
+	background: black;
+	color:white;
+	text-align: center;
+	font-family: verdana sans-serif;
+	font-size: 12px;
+	line-height:100px;
+}
+
+.menu{
+	visibility:hidden;
+	height:90px;
+	width:auto;
+	background: black;
+	color:white;
+	text-align: center;
+	font-family: verdana sans-serif;
+	font-size: 12px;
+	line-height:100px;
+	position:absolute;
+	top:5px;
+	right:5px;
+}
+
+.menu-choice-background{
+	height:80px;
+	width:100px;
+	float:left;
+	background: gray;
+	margin:5px;
+}
+
+.menu-choice-background-image{
+	width: 100%;
+    height: 100%;
+}
+
+.frame{
+	position: absolute;
+	background: white;
+}
+
+.outerFrame{
+	position: absolute;
+}
+
+/*
+#frame1{
+	width:54px;
+	height:77px;
+}
+*/

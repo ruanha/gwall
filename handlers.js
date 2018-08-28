@@ -1,17 +1,48 @@
 "use strict"
+/* SHOULD HANDLERS CALL A VIEW TO GET THE (RENDERED) HTML? */
+let querystring = require('querystring')
 
-function start(res){
-	console.log("Request handler 'start' was called")
-	res.writeHead(200, {"Content-Type": "text/plain"})
-	res.write("start handler puts content here")
-	res.end()
+function wall(res){
+	console.log("Request handler 'wall' was called")
+	/* ROUTING WITH STREAM+PIPE:
+	const fs = require('fs')
+	let readStream = fs.createReadStream(__dirname + '/index.html', 'utf8')
+	readStream.pipe(res)*/
+
+	/* ROUTING WITH fs.readFile()*/
+	const fs = require('fs')
+	fs.readFile('index.html', 'utf8', function(err, data){
+		if (err) throw err
+		res.writeHead(200, {"Content-Type": "text/html"})
+		res.write(data)
+		res.end()
+	})
 }
 
-function upload(res){
+function upload(res, path, postData){
 	console.log("Request handler 'upload' was called")
 	res.writeHead(200, {"Content-Type": "text/plain"})
-	res.write("upload handler puts content here")
+	res.write( "You've sent:" + querystring.parse(postData)["text"] )
 	res.end()
 }
 
-module.exports = {start:start, upload:upload}
+function statics(res, path){
+	const fs = require('fs')
+	console.log("serving static content")
+	fs.readFile('main.css', 'utf8', function(err, data){
+		if (err) throw err
+		res.writeHead(200, {"Content-Type": "text/css"})
+		res.write(data)
+		res.end()
+	})
+}
+
+function images(res, path){
+	const fs = require('fs')
+	console.log("serving an image", path)
+	res.writeHead(200, {"Content-Type": "static/jpg"})
+	let imgStream = fs.createReadStream('.'+path)
+	imgStream.pipe(res)
+}
+
+module.exports = {wall:wall, upload:upload, statics:statics, images:images}
