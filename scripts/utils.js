@@ -19,6 +19,7 @@ function onMouseMove(e){
 
 function placeFrame(e){
 	let floatingFrame = document.getElementById("floating-frame")
+	floatingFrame.parentNode.removeChild(floatingFrame)
 	let frame = {left:e.layerX, top:e.layerY,
 	 		height:activeFrame.height, width:activeFrame.width}
 	frames[frames.length] = frame

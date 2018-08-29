@@ -10,6 +10,7 @@ let activeFrame = {
 }
 background = {}
 
+let wallEvents = []
 
 let frames = {}
 
