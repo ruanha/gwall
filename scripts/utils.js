@@ -20,23 +20,49 @@ function onMouseMove(e){
 function placeFrame(e){
 	let floatingFrame = document.getElementById("floating-frame")
 	floatingFrame.parentNode.removeChild(floatingFrame)
-	let frame = {left:e.layerX, top:e.layerY,
-	 		height:activeFrame.height, width:activeFrame.width}
-	frames[frames.length] = frame
-	user.floatingFrame = false
+	activeFrame.left = e.layerX
+	activeFrame.top = e.layerY
+	activeFrame.floats = false
+	//user.floatingFrame = false
 	wall.removeEventListener('mousemove', onMouseMove)
-	renderFrame(frame)
+	renderFrame()
+	renderPicture()
 }
 
-function renderFrame(frame){
-	console.log("rendering a frame")
+function renderPicture(){
 	let placedFrame = document.createElement("div")
 	placedFrame.setAttribute("class", "placed-frame")
-	placedFrame.style.left = frame.left+"px"
-	placedFrame.style.top = frame.top+"px"
-	placedFrame.style.width = frame.width+"px"
-	placedFrame.style.height = frame.height+"px"
-	placedFrame.style.border = "2px solid black"
+	placedFrame.style.left = activeFrame.left+"px"
+	placedFrame.style.top = activeFrame.top+"px"
+	placedFrame.style.width = activeFrame.width+"px"
+	placedFrame.style.height = activeFrame.height+"px"
+	//placedFrame.style.border = activeFrame.border+"px"+" solid "+activeFrame.color
 	wall.appendChild(placedFrame)
-	console.log(activeFrame)
+}
+
+function renderFrame(){
+	let outerFrame = document.createElement("div")
+	outerFrame.style.background = activeFrame.color
+	outerFrame.style.left = (activeFrame.left-activeFrame.border)+"px"
+	outerFrame.style.top = (activeFrame.top-activeFrame.border)+"px"
+	outerFrame.style.width = (activeFrame.width+activeFrame.border*2)+"px"
+	outerFrame.style.height = (activeFrame.height+activeFrame.border*2)+"px"
+	outerFrame.setAttribute("class", "frame")
+	wall.appendChild(outerFrame)
+}
+
+function wallPrintMenu(e){
+	//frame menu: delete, change color, border size
+	// arrow key control
+	
+
+}
+
+function clickFrame(e){
+	//print menu: insert print, 
+
+}
+
+function dragComposition(e){
+	//onmousedown move all frames
 }

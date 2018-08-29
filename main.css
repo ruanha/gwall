@@ -65,6 +65,7 @@ img {
 	position: relative;
 	width:800px;
 	height:500px;
+	background-color: rgba(37, 218, 218, 0.2);
 }
 
 #wall-background{
@@ -117,7 +118,7 @@ img {
 	height:80px;
 	width:100px;
 	float:left;
-	background: gray;
+	background: #25DADA;
 	margin:5px;
 }
 
