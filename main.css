@@ -139,8 +139,8 @@ img {
 .mouse-menu{
 	visibility:hidden;
 	position:absolute;
-	border:1px solid #22416B;
 	border-radius:5px;
+	background: white;
 }
 .mouse-menu-header{
 	padding:5px;
