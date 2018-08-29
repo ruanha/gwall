@@ -1,17 +1,38 @@
 "use strict"
 
-/* MOUSE CLICK WALL MENU */
-const wall = document.getElementById("wall")
+let user = {
+	floatingFrame:false,
+}
 
+let activeFrame = {
+	width:0,
+	height:0,
+}
+background = {}
+
+
+let frames = {}
+
+/* WALL EVENTS:
+click events:
+floatingFrame active --> place frame
+else if (wall):
+open wall mouse menu
+else if (frame)
+open frame menu
+else if (print)
+open print menu
+*/
+
+
+const wall = document.getElementById("wall")
 wall.addEventListener('click', (e)=>{
-	let mouseMenu = document.getElementById("editor-wall-menu")
-	if (mouseMenu.style.visibility === "hidden" ){
-		mouseMenu.style.visibility = "visible"
-		mouseMenu.style.top = e.layerY+"px"
-		mouseMenu.style.left = e.layerX+"px"		
+	if ( user.floatingFrame ){
+		console.log("placing a framed!")
+		placeFrame(e)
 	}
 	else{
-		mouseMenu.style.visibility = "hidden"
+		wallMouseMenu(e)
 	}
 })
 
@@ -28,7 +49,6 @@ choiceStock.addEventListener('click', ()=>{
 })
 
 let chooseBackgroundButtons = document.getElementsByClassName("menu-choice-background-image")
-
 for (let i=0; i<chooseBackgroundButtons.length; i++){
 	let button = chooseBackgroundButtons[i]
 	let background = document.getElementById("background")
@@ -38,5 +58,27 @@ for (let i=0; i<chooseBackgroundButtons.length; i++){
 
 	})
 }
+/*INSERT FRAMES (HELPER FUNCTIONS) */
+
 
 /* 10x10 FRAME */
+let choice10x10 = document.getElementById("choice-10x10")
+choice10x10.addEventListener('click', (e)=>{
+	user.floatingFrame = true
+	activeFrame = {width:100, height:100, border:2}
+	//close menu
+	let mouseMenu = document.getElementById("editor-wall-menu")
+	mouseMenu.style.visibility = "hidden"
+	//make frame div
+	let frame = document.createElement("div")
+	frame.setAttribute("class", "floating-frame")
+	frame.setAttribute("id", "floating-frame")
+	frame.style.top = e.layerY+"px"
+	frame.style.left = e.layerX+"px"
+	frame.style.width = 100+"px"
+	frame.style.height = 100+"px"
+	frame.style.border = "2px solid black"
+	wall.appendChild(frame)
+	//ADD MOUSE MOVE EVENT TO WALL
+	wall.addEventListener('mousemove', onMouseMove)
+})
