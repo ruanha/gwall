@@ -45,4 +45,28 @@ function images(res, path){
 	imgStream.pipe(res)
 }
 
-module.exports = {wall:wall, upload:upload, statics:statics, images:images}
+function scripts(res, path){
+	const fs = require('fs')
+	console.log("serving script content")
+	fs.readFile('.'+path, 'utf8', function(err, data){
+		if (err) throw err
+		res.writeHead(200, {"Content-Type": "text/javascript"})
+		res.write(data)
+		res.end()
+	})	
+}
+
+function editor(res){
+	const fs = require('fs')
+	console.log("serving a new compostion")
+	fs.readFile('editor.html', 'utf8', function(err, data){
+		if (err) throw err
+		res.writeHead(200, {"Content-Type": "text/html"})
+		res.write(data)
+		res.end()
+	})
+}
+
+
+module.exports = {wall:wall, upload:upload, statics:statics, 
+	images:images, editor:editor, scripts:scripts,}

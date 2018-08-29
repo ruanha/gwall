@@ -8,15 +8,9 @@ let handle = {
 	wall:{handler:handlers.wall, regex:/^\/wall$|^\/$/},
 	upload:{handler:handlers.upload, regex:/^\/upload$/},
 	css:{handler:handlers.statics, regex:/^\/main.css$/},
-	images:{handler:handlers.images, regex:/^[\/images\/+]/},
+	images:{handler:handlers.images, regex:/^\/images\/[\w]/},
+	scripts:{handler:handlers.scripts, regex:/^\/scripts\//},
+	editor:{handler:handlers.editor, regex:/^\/editor$/},
 }
-/*
-handle['/'] = handlers.wall
-handle['/wall'] = handlers.wall
-handle['/upload'] = handlers.upload
-handle['/main.css'] = handlers.statics
-*/
-
-console.log("index says: ", handle)
 
 server.start(router.route, handle)

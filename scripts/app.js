@@ -49,7 +49,7 @@ innerFrame.style.top = frame1.y+"px"
 innerFrame.style.width = frame1.width+"px"
 innerFrame.style.height = frame1.height+"px"
 
-innerFrame.addEventListener('oncontextmenu', ()=>{
+innerFrame.addEventListener('click', ()=>{
 	console.log("wow")
 })
 
