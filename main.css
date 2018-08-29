@@ -19,9 +19,42 @@ img {
 }
 
 .container{
+	margin-left: auto;
+	margin-right: auto;
+	width:900px;
+	margin:0 auto;
 }
 
+/* NAVIGATION TOP BAR */
+.navbar{
+	display: inline-block;
+	position: relative;
+	
+	background:#22416B;
+	height:auto;
+	border-radius:10px;
+	width:100%;
+	max-width: 900px;
+
+}
+.navbar-item{
+	color:white;
+	font-weight: bold;
+	margin:10px;	
+}
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+
+
+/* WALL APP */
+
 #wall-app{
+	display:block;
+	position: relative;
 	margin:0 auto;
 	margin-top:1%;
 	width:900px;
@@ -54,19 +87,21 @@ img {
 	float:left;
 	width:90px;
 	height:600px;
-	background:gray;
+	background:#22416B;
 }
 
 .panel-button{
 	height:90px;
 	width:auto;
 	margin: 5px;
-	background: black;
+	background: #669999;
 	color:white;
 	text-align: center;
 	font-family: verdana sans-serif;
 	font-size: 12px;
+	font-weight: bold;
 	line-height:100px;
+	border-radius:25px;
 }
 
 .menu{
