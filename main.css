@@ -29,7 +29,6 @@ img {
 .navbar{
 	display: inline-block;
 	position: relative;
-	
 	background:#22416B;
 	height:auto;
 	border-radius:10px;
@@ -62,6 +61,7 @@ img {
 }
 
 #wall{
+	float:left;
 	position: relative;
 	width:800px;
 	height:500px;
@@ -83,20 +83,23 @@ img {
 }
 
 #panel{
-	display: inline-block;
-	position: relative;
-	
+	float:left;
 	background:#22416B;
-	height:auto;
+	height:500px;
 	border-radius:10px;
-	width:100%;
-	max-width: 900px;
-
+	width:90px;
+	margin-left:10px;
 }
 .panel-button{
-	color:white;
+	width:80px;
+	height:80px;
+	margin:5px;
+	line-height: 80px;
+	text-align: center;
 	font-weight: bold;
-	margin:10px;	
+	color:white;
+	border:1px solid white;
+	border-radius: 10px;
 }
 
 .menu{
@@ -172,4 +175,32 @@ img {
 .placed-frame{
 	position:absolute;
 	background: white;
+	overflow:hidden;
+}
+
+.placed-print{
+	width:100%;
+	height:auto;
+	cursor:pointer;
+}
+
+.full-menu{
+	visibility: hidden;
+	position:absolute;
+	left:50px;
+	top:25px;
+	background:white;
+	width:700px;
+	height:450px;
+	border-radius: 25px;
+	overflow: hidden;
+}
+
+.print-container{
+	width:600px;
+
+}
+
+.print-choice-image{
+	width:20%;
 }

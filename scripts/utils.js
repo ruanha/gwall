@@ -18,7 +18,6 @@ function nothing(){
 
 function onMouseMove(e){
 	let frame = document.getElementById("floating-frame")
-	frame.style.visibility = "visible"
 	frame.style.top = e.layerY+"px"
 	frame.style.left = e.layerX+"px"
 }
@@ -29,24 +28,38 @@ function placeFrame(e){
 	activeFrame.left = e.layerX
 	activeFrame.top = e.layerY
 	activeFrame.floats = false
-	//user.floatingFrame = false
 	wall.removeEventListener('mousemove', onMouseMove)
+	renderBorder()
 	renderFrame()
-	renderPicture()
+	renderPrint()
+	frames.add(activeFrame) //must be after renderPrint, bec. of counter
 }
 
-function renderPicture(){
+function renderPrint(){
+	//let placedPrint = document.createElement("div")
+	let placedFrame = document.getElementById(frames.counter)
+	placedFrame.innerHTML = "<img src=images/prints/test.jpg class=placed-print>"
+	//placedPrint.setAttribute("class", "placed-print")
+	//placedPrint.style.backgroundImage = "url(images/prints/test.jpg)"
+	//placedPrint.style.left = activeFrame.left+"px"
+	//placedPrint.style.top = activeFrame.top+"px"
+	//placedPrint.style.width = activeFrame.width+"px"
+	//placedPrint.style.height = activeFrame.height+"px"
+	//placedFrame.appendChild(placedPrint)
+}
+
+function renderFrame(){
 	let placedFrame = document.createElement("div")
 	placedFrame.setAttribute("class", "placed-frame")
+	placedFrame.setAttribute("id", frames.counter)
 	placedFrame.style.left = activeFrame.left+"px"
 	placedFrame.style.top = activeFrame.top+"px"
 	placedFrame.style.width = activeFrame.width+"px"
 	placedFrame.style.height = activeFrame.height+"px"
-	//placedFrame.style.border = activeFrame.border+"px"+" solid "+activeFrame.color
 	wall.appendChild(placedFrame)
 }
 
-function renderFrame(){
+function renderBorder(){
 	let outerFrame = document.createElement("div")
 	outerFrame.style.background = activeFrame.color
 	outerFrame.style.left = (activeFrame.left-activeFrame.border)+"px"
@@ -58,16 +71,27 @@ function renderFrame(){
 }
 
 function wallPrintMenu(e){
-	//frame menu: delete, change color, border size
-	// arrow key control
-	let frame = document.getElementsByClassName("placed-frame")	
-	photo.insertMenu(frame[0].offsetTop + e.layerY, frame[0].offsetLeft + e.layerX)
-
+	//print menu: insert print
+	let choices = { 
+		"insert print":["stock print", "upload"],
+		"insert frame":["15x20", "20x30", "30x40"]
+	}
+	let events = {
+		"stock-photo":[choiceStock],
+		"upload":[nothing],
+		"15x20":[frameChoice, 60, 80],
+		"20x30":[frameChoice, 80, 120],
+		"30x40":[frameChoice, 120, 160]
+	}
+	let menu = new MouseMenu("editor-print-menu", choices, events)
+	activeMenu.set("editor-print-menu", menu)
+	menu.insertMenu(e.layerY, e.layerX)
 }
 
 function clickFrame(e){
-	//print menu: insert print, 
 
+	//frame menu: delete, change color, border size
+	// arrow key control}
 }
 
 function dragComposition(e){
@@ -88,6 +112,21 @@ class Frame{
 	}
 }
 
+let frames = {
+	counter:0,
+	framesOnWall:{
+	//#frame-id:frame-obj
+	},
+
+	// auto insert new frame here (+outerFrame, print objects)
+	add(frame, print){
+		frame.border = activeFrame.border
+		frame.color = activeFrame.color
+		frame.print = print || "default"
+		this.framesOnWall[this.counter++] = frame
+	}
+}
+
 function setFloatingFrame(activeFrame){
 	let floatingFrame = document.createElement("div")
 	let wall = document.getElementById("wall")
@@ -98,6 +137,7 @@ function setFloatingFrame(activeFrame){
 	floatingFrame.style.width = activeFrame.width+"px"
 	floatingFrame.style.height = activeFrame.height+"px"
 	floatingFrame.style.border = "1px solid black"
+	floatingFrame.style.visibility = "visible"
 	return floatingFrame
 }
 
@@ -133,6 +173,57 @@ class MouseMenu{
 		wall.appendChild(menu)
 	}
 }
+
+class Panel{
+	constructor(id){
+		this.id = id
+		this.panelButtons = {}
+	}
+	addButtons(buttons){
+		//buttons: dict of buttons to add
+
+		this.panelButtons = buttons
+
+		let div = document.getElementById(this.id)
+		for ( let buttonName in buttons ){
+			let button = document.createElement("div")
+			button.setAttribute("class", "panel-button")
+			button.setAttribute("id", buttonName)
+			button.textContent = buttonName
+			div.appendChild(button)
+		}
+	}
+	removeButtons(){
+
+	}
+	reset(){
+		console.log("resetting wall")
+	}
+}
+
+function insertPrint(e){
+	console.log("insert print")
+	let printMenu = document.getElementById("menu-prints")
+	printMenu.style.visibility = "visible"
+	activeMenu.set("menu-prints", printMenu)
+}
+
+panel = new Panel("panel")
+panel.addButtons({"reset":[panel.reset], "save":[nothing]})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function frameChoice(width, height){
 	/* set the event that fires when a frame is selected
