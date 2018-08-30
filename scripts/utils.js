@@ -203,11 +203,13 @@ function insertPrint(e){
 	activeMenu.set("menu-prints", printMenu)
 }
 
+function save(){}
+
 
 let panel = new Panel("panel")
 
 let bottomPanel = new Panel("bottom-panel")
-bottomPanel.addButtons({"reset":[bottomPanel.reset], "save":[nothing]})
+bottomPanel.addButtons({"reset":[bottomPanel.reset], "save":[save]})
 
 
 
