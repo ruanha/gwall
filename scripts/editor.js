@@ -20,24 +20,36 @@ let activeMenu = {
 	}
 }
 
-let frame = {
-	// auto insert new frame here (+outerFrame, print objects)
-}
-
 let activeFrame = {
 	width:0,
 	height:0,
 	border:0,
 	color:"black",
 	floats:false,
+	adjusting:false,
 	frame:undefined, //set the frame div here
 	print:undefined, //set to default print
 }
+
+function tempFunc(){
+	let message = document.getElementById("begin-message")//.parentNode.removeChild(document.getElementById("begin-message"))
+	document.removeEventListener('click', tempFunc)
+	activeMenu.set("begin-message", message)
+	choiceStock()
+
+} 
+document.addEventListener('click', tempFunc)
+
 // LISTEN FOR CLICK EVENT EVERYWHERE
 document.addEventListener('click',(e)=>{
 	console.log("something clicked...")
 	console.log(e.target.className)
-	if ( activeMenu.bool && (e.target.className !== "mouse-menu-item" && 
+	if ( activeFrame.adjusting ){
+		activeFrame.adjusting = false
+		console.log("remove eventListener on frame")
+		document.removeEventListener('keypress', arrowKeyFrameControl)
+	}
+	else if ( activeMenu.bool && (e.target.className !== "mouse-menu-item" && 
 				e.target.className !== "mouse-menu-header" &&
 				e.target.className !== "print-choice-image" ) ){
 		//there is an active menu, you didn't click on it, i'm closing it. make up your damn mind!
@@ -60,7 +72,7 @@ document.addEventListener('click',(e)=>{
 			wallMouseMenu(e)
 		}
 	}
-	else if ( e.target.className === "placed-frame" ){
+	else if ( e.target.className === "placed-print" ){
 		console.log("wall print activated")
 		// activate print: you can move and resize it
 
@@ -89,6 +101,12 @@ document.addEventListener('click',(e)=>{
 		console.log(e.target)
 		activeMenu.obj.style.visibility = "hidden"
 		activeMenu.reset()
+	}
+	else if ( e.target.className === 'border' && !activeFrame.adjusting){
+		activeFrame.adjusting = true
+		let frameId = e.target.id.split("-")[1]
+		activeFrame.id = frameId
+		document.addEventListener('keypress', arrowKeyFrameControl)
 	}
 	else {
 		console.log("i have no idea how you did that...")

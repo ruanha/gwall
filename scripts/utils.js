@@ -4,7 +4,7 @@ function wallMouseMenu(e){
 	let choices = { "insert background":["stock-photo", "upload"],
 				"insert frame":["15x20", "20x30", "30x40"]
 	}
-	let events = { "stock-photo":[choiceStock], "upload":[nothing], "15x20":[frameChoice, 60, 80], 
+	let events = { "stock-photo":[choiceStock], "upload":[upload], "15x20":[frameChoice, 60, 80], 
 			"20x30":[frameChoice, 80, 120], "30x40":[frameChoice, 120, 160] }
 
 	let wallMenu = new MouseMenu("editor-wall-menu", choices, events)
@@ -12,8 +12,7 @@ function wallMouseMenu(e){
 	wallMenu.insertMenu(e.layerY, e.layerX)
 }
 
-function nothing(){
-
+function upload(){
 }
 
 function onMouseMove(e){
@@ -36,16 +35,8 @@ function placeFrame(e){
 }
 
 function renderPrint(){
-	//let placedPrint = document.createElement("div")
 	let placedFrame = document.getElementById(frames.counter)
 	placedFrame.innerHTML = "<img src=images/prints/test.jpg class=placed-print>"
-	//placedPrint.setAttribute("class", "placed-print")
-	//placedPrint.style.backgroundImage = "url(images/prints/test.jpg)"
-	//placedPrint.style.left = activeFrame.left+"px"
-	//placedPrint.style.top = activeFrame.top+"px"
-	//placedPrint.style.width = activeFrame.width+"px"
-	//placedPrint.style.height = activeFrame.height+"px"
-	//placedFrame.appendChild(placedPrint)
 }
 
 function renderFrame(){
@@ -61,12 +52,13 @@ function renderFrame(){
 
 function renderBorder(){
 	let outerFrame = document.createElement("div")
+	outerFrame.setAttribute("class", "border")
+	outerFrame.setAttribute("id", "border-"+frames.counter)
 	outerFrame.style.background = activeFrame.color
 	outerFrame.style.left = (activeFrame.left-activeFrame.border)+"px"
 	outerFrame.style.top = (activeFrame.top-activeFrame.border)+"px"
 	outerFrame.style.width = (activeFrame.width+activeFrame.border*2)+"px"
 	outerFrame.style.height = (activeFrame.height+activeFrame.border*2)+"px"
-	outerFrame.setAttribute("class", "frame")
 	wall.appendChild(outerFrame)
 }
 
@@ -108,13 +100,13 @@ class Frame{
 		this.left = 0
 		this.color = "black"
 		this.border = 2
-		this.floating = false
+		this.floats = false
 	}
 }
 
 let frames = {
 	counter:0,
-	framesOnWall:{
+	onWall:{
 	//#frame-id:frame-obj
 	},
 
@@ -123,7 +115,10 @@ let frames = {
 		frame.border = activeFrame.border
 		frame.color = activeFrame.color
 		frame.print = print || "default"
-		this.framesOnWall[this.counter++] = frame
+		this.onWall[this.counter++] = frame
+	},
+	get(id){
+		return onWall[id]
 	}
 }
 
@@ -208,12 +203,36 @@ function insertPrint(e){
 	activeMenu.set("menu-prints", printMenu)
 }
 
-panel = new Panel("panel")
-panel.addButtons({"reset":[panel.reset], "save":[nothing]})
+
+let panel = new Panel("panel")
+
+let bottomPanel = new Panel("bottom-panel")
+bottomPanel.addButtons({"reset":[bottomPanel.reset], "save":[nothing]})
 
 
 
-
+function arrowKeyFrameControl(e){
+	let moveFrame = document.getElementById(activeFrame.id)
+	let moveBorder = document.getElementById("border-"+activeFrame.id)
+	switch(e.keyCode){
+		case 37:
+			moveFrame.style.left = moveFrame.offsetLeft - 1 + "px"
+			moveBorder.style.left = moveBorder.offsetLeft - 1 + "px"
+		break
+		case 38:
+			moveFrame.style.top = moveFrame.offsetTop - 1 + "px"
+			moveBorder.style.top = moveBorder.offsetTop - 1 + "px"
+		break
+		case 39:
+			moveFrame.style.left = moveFrame.offsetLeft + 1 + "px"
+			moveBorder.style.left = moveBorder.offsetLeft + 1 + "px"
+		break
+		case 40:
+			moveFrame.style.top = moveFrame.offsetTop + 1 + "px"
+			moveBorder.style.top = moveBorder.offsetTop + 1 + "px"
+		break
+	}
+}
 
 
 
@@ -258,6 +277,7 @@ for (let i=0; i<chooseBackgroundButtons.length; i++){
 	let background = document.getElementById("background")
 	button.addEventListener('click', ()=>{
 		background.src = button.attributes.src.value
+		background.style.opacity = "1"
 		button.parentNode.parentNode.style.visibility = "hidden"
 	})
 }
