@@ -205,6 +205,18 @@ function insertPrint(e){
 
 function save(){}
 
+function rotate(){
+	activeFrame.portrait = false
+	let frame = document.getElementById(activeFrame.id)
+	let tempWidth = frame.style.width
+	frame.style.width = frame.style.height
+	frame.style.height = tempWidth
+
+	let border = document.getElementById("border-"+activeFrame.id)
+	border.style.height = frame.style.height
+	border.style.width = frame.style.width
+}
+
 
 let panel = new Panel("panel")
 

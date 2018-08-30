@@ -77,7 +77,7 @@ document.addEventListener('click',(e)=>{
 		// activate print: you can move and resize it
 
 		// open panel options for print
-		let buttons = {"insert":[insertPrint, e.target.id]}
+		let buttons = {"insert":[insertPrint, e.target.id], "rotate":[rotate]}
 		panel.addButtons(buttons)
 
 	}
