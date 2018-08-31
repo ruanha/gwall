@@ -40,7 +40,8 @@ function statics(res, path){
 function images(res, path){
 	const fs = require('fs')
 	console.log("serving an image", path)
-	res.writeHead(200, {"Content-Type": "static/jpg"})
+	res.writeHead(200, {"Content-Type": "image/jpg", "Cache-Control": "public,max-age=99936000",
+		"Last-Modified": "Fri, 31 Aug 2018 10:45:26 GMT"})
 	let imgStream = fs.createReadStream('.'+path)
 	imgStream.pipe(res)
 }
