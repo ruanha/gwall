@@ -155,6 +155,9 @@ img {
 	background: white;
 	cursor:move;
 }
+.border:hover{
+	box-shadow:5px 5px 5px rgba(0, 0, 0, 0.5);
+}
 
 /* MOUSE MENU */
 .mouse-menu{
@@ -193,6 +196,10 @@ img {
 	position:absolute;
 	background: white;
 	overflow:hidden;
+}
+
+.placed-frame:hover{
+	box-shadow:5px 5px 5px rgba(0, 0, 0, 0.5);
 }
 
 .placed-print{
