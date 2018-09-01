@@ -105,12 +105,10 @@ document.addEventListener('dragstart', (e)=>{
 			let x = (mousePos.x - mousePos.startX)
 			let y = (mousePos.y - mousePos.startY)
 			let min = Math.min(x, y)
-			//console.log(min)
 			let distance = Math.abs(min)
-			//console.log(distance)
-			console.log(distance)
 			print.domElement.style.top = min+"px"
-			print.domElement.style.left = min+"px"	
+			print.domElement.style.left = min+"px"
+
 			if ( min < 0 ){
 				print.domElement.style.width = print.width + distance*2+"px"
 				print.domElement.style.height = print.height + distance*2+"px"			
