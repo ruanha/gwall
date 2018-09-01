@@ -2,17 +2,13 @@
 
 wall.addEventListener('click', (e)=>{
 	if ( e.target.className === 'border' ){
-		console.log("click")
 		frame.domElement = document.getElementById(e.target.id.split("-")[1])
 		frame.id = e.target.id.split("-")[1]
-		arrowKeyControl(e)
-	}
-	else if ( e.target.className === 'placed-print'){
-		console.log("implement change of print size")
+		frame.active = true
 	}
 	else {
 		//deactivate active frame
-		document.removeEventListener('keypress', arrowKeyControl)
+		frame.active = false
 	}
 })
 
@@ -23,9 +19,7 @@ wall.addEventListener('mousedown', (e)=>{
 	if ( e.target.className === 'border' ){
 		setTimeout(()=>{
 			if ( mouseDown ){
-				console.log(e.which)
 				frame.drag = true
-				console.log("down")
 				frame.domElement = document.getElementById(e.target.id.split("-")[1])
 				//frame.id = e.target.id.split("-")[1]
 				frame.load(e.target.id.split("-")[1])
@@ -43,7 +37,6 @@ wall.addEventListener('mouseup', (e)=>{
 	if ( frame.drag ){
 		frame.drag = false
 		placeFrame(e)
-		console.log("mouse up")
 	}
 })
 
@@ -61,33 +54,10 @@ function placeFrame(e){
 	wall.removeEventListener('mousemove', onMouseMove, false)
 	wall.removeEventListener('click', placeFrame, false)
 	frame.renderBorder()
-	document.addEventListener('keypress', arrowKeyControl)
 	frame.domElement = frame.renderFrame()
 	frame.save()
 	frame.renderPrint()
-}
-
-function arrowKeyControl(e){
-	let moveFrame = frame.domElement
-	let moveBorder = document.getElementById("border-"+frame.id)
-	switch(e.keyCode){
-		case 37:
-			moveFrame.style.left = moveFrame.offsetLeft - 1 + "px"
-			moveBorder.style.left = moveBorder.offsetLeft - 1 + "px"
-		break
-		case 38:
-			moveFrame.style.top = moveFrame.offsetTop - 1 + "px"
-			moveBorder.style.top = moveBorder.offsetTop - 1 + "px"
-		break
-		case 39:
-			moveFrame.style.left = moveFrame.offsetLeft + 1 + "px"
-			moveBorder.style.left = moveBorder.offsetLeft + 1 + "px"
-		break
-		case 40:
-			moveFrame.style.top = moveFrame.offsetTop + 1 + "px"
-			moveBorder.style.top = moveBorder.offsetTop + 1 + "px"
-		break
-	}
+	frame.active = true
 }
 
 const protoFrame = {
@@ -128,6 +98,29 @@ const protoFrame = {
 		wall.addEventListener('click', placeFrame, false)
 	},
 
+	arrowKeyControl(e){
+		let moveFrame = frame.domElement
+		let moveBorder = document.getElementById("border-"+frame.id)
+		switch(e.keyCode){
+			case 37:
+				moveFrame.style.left = moveFrame.offsetLeft - 1 + "px"
+				moveBorder.style.left = moveBorder.offsetLeft - 1 + "px"
+			break
+			case 38:
+				moveFrame.style.top = moveFrame.offsetTop - 1 + "px"
+				moveBorder.style.top = moveBorder.offsetTop - 1 + "px"
+			break
+			case 39:
+				moveFrame.style.left = moveFrame.offsetLeft + 1 + "px"
+				moveBorder.style.left = moveBorder.offsetLeft + 1 + "px"
+			break
+			case 40:
+				moveFrame.style.top = moveFrame.offsetTop + 1 + "px"
+				moveBorder.style.top = moveBorder.offsetTop + 1 + "px"
+			break
+		}
+	},
+
 	styleFloatingFrame(){
 		let wall = document.getElementById("wall")
 		this.domElement.setAttribute("class", "floating-frame")
@@ -140,8 +133,8 @@ const protoFrame = {
 	},
 
 	renderPrint(){
-		let placedFrame = document.getElementById(this.id)
-		placedFrame.innerHTML = '<img src="images/prints/test.jpg" class="placed-print unselectable">'
+		let print = printFactory(frame.id)
+		print.render(frame.id)
 	},
 
 	renderFrame(){
@@ -189,6 +182,7 @@ function frameFactory(width, height){
 	let frame = Object.create(protoFrame)
 	let domFrame = document.createElement("div")
 	domFrame.setAttribute("class", "frame")
+	frame.active = false
 	frame.domElement = domFrame
 	frame.widthRatio = width
 	frame.heightRatio = height
