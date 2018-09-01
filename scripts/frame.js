@@ -11,7 +11,8 @@ wall.addEventListener('click', (e)=>{
 		console.log("implement change of print size")
 	}
 	else {
-		console.log("deactivate active frame/print")
+		//deactivate active frame
+		document.removeEventListener('keypress', arrowKeyControl)
 	}
 })
 

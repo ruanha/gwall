@@ -12,11 +12,11 @@ form, audio, video {
 body {
 	line-height: 1;
 }
-
+/*
 img {
     width: 100%;
     height: 100%;
-}
+}*/
 
 .unselectable {
     -webkit-user-select: none; /* Safari, Chrome */
@@ -171,32 +171,6 @@ img {
 	box-shadow:5px 5px 5px rgba(0, 0, 0, 0.5);
 }
 
-/* MOUSE MENU */
-.mouse-menu{
-	visibility:hidden;
-	position:absolute;
-	border-radius:5px;
-	background: white;
-}
-.mouse-menu-header{
-	padding:5px;
-	margin:2px;
-	background:#22416B;
-	border-radius:5px;
-	color:white;
-}
-.mouse-menu-item{
-	padding:5px;
-	margin:2px;
-	border-radius:5px;
-	background:#25DADA;
-	color:white;
-	border-radius:5px;
-}
-.mouse-menu-item:hover{
-	text-decoration: underline;
-	cursor: pointer;
-}
 
 /* THE FRAME WHEN BEING POSITIONED */
 .floating-frame{
@@ -214,12 +188,41 @@ img {
 	box-shadow:5px 5px 5px rgba(0, 0, 0, 0.5);
 }
 
+
+
+
+/* THE PRINT */
 .placed-print{
-	display:inline-block;
-	position: relative;
-	margin:0 auto;
+	position:absolute;
+	height:100%;
+	width: auto;
 	cursor:pointer;
 }
+
+.adjust-print{
+	position:absolute;
+	height:100%;
+	width: auto;
+	cursor:pointer;
+	opacity:0.9;
+}
+
+.resize-icon{
+	position: absolute;
+	left:-10px;
+	top:-10px;
+	width:20px;
+	height:20px;
+	border-radius: 10px;
+	opacity:0.9;
+}
+
+
+
+
+
+
+
 
 #overlay{
 	position:absolute;
