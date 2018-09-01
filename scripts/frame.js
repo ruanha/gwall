@@ -2,14 +2,50 @@
 
 wall.addEventListener('click', (e)=>{
 	if ( e.target.className === 'border' ){
+		console.log("click")
 		frame.domElement = document.getElementById(e.target.id.split("-")[1])
 		frame.id = e.target.id.split("-")[1]
 		arrowKeyControl(e)
 	}
 	else if ( e.target.className === 'placed-print'){
-		console.log("lets do this!")
+		console.log("implement change of print size")
+	}
+	else {
+		console.log("deactivate active frame/print")
 	}
 })
+
+let mouseDown = false
+
+wall.addEventListener('mousedown', (e)=>{
+	mouseDown = true
+	if ( e.target.className === 'border' ){
+		setTimeout(()=>{
+			if ( mouseDown ){
+				console.log(e.which)
+				frame.drag = true
+				console.log("down")
+				frame.domElement = document.getElementById(e.target.id.split("-")[1])
+				//frame.id = e.target.id.split("-")[1]
+				frame.load(e.target.id.split("-")[1])
+				let border = document.getElementById(e.target.id)
+				border.parentNode.removeChild(border)
+				frame.floatFrame()
+			}
+		}, 200)
+
+	}	
+})
+
+wall.addEventListener('mouseup', (e)=>{
+	mouseDown = false
+	if ( frame.drag ){
+		frame.drag = false
+		placeFrame(e)
+		console.log("mouse up")
+	}
+})
+
 
 function onMouseMove(e){
 	frame.domElement.style.top = e.layerY+"px"
@@ -17,15 +53,16 @@ function onMouseMove(e){
 }
 
 function placeFrame(e){
-	frame.domElement.parentNode.removeChild(frame.domElement)
 	frame.left = e.layerX
 	frame.top = e.layerY
+	frame.domElement.parentNode.removeChild(frame.domElement)
 	let wall = document.getElementById("wall")
 	wall.removeEventListener('mousemove', onMouseMove, false)
 	wall.removeEventListener('click', placeFrame, false)
 	frame.renderBorder()
 	document.addEventListener('keypress', arrowKeyControl)
 	frame.domElement = frame.renderFrame()
+	frame.save()
 	frame.renderPrint()
 }
 
@@ -55,6 +92,31 @@ function arrowKeyControl(e){
 const protoFrame = {
 	counter: 0,
 	id:0,
+	frames:{},
+
+	load(id){
+		this.id = id
+		this.widthRatio = this.frames[id].widthRatio
+		this.heightRatio = this.frames[id].heightRatio
+		this.width = this.frames[id].width
+		this.height = this.frames[id].height
+		this.border = this.frames[id].border
+		this.background = this.frames[id].background
+		this.top = this.frames[id].top
+		this.left = this.frames[id].left
+	},
+
+	save(){
+		protoFrame.frames[frame.id] = {}
+		protoFrame.frames[frame.id]["widthRatio"] = frame.widthRatio
+		protoFrame.frames[frame.id]["heightRatio"] = frame.heightRatio
+		protoFrame.frames[frame.id]["width"] = frame.width
+		protoFrame.frames[frame.id]["height"] = frame.height
+		protoFrame.frames[frame.id]["border"] = frame.border
+		protoFrame.frames[frame.id]["background"] = frame.background
+		protoFrame.frames[frame.id]["top"] = frame.top
+		protoFrame.frames[frame.id]["left"] = frame.left
+	},
 
 	floatFrame(){
 		this.styleFloatingFrame()
@@ -76,28 +138,9 @@ const protoFrame = {
 		this.domElement.style.border = "1px dashed black"
 	},
 
-	/*onMouseMove(e){
-		console.log("Weeee!")
-		this.domElement.style.top = e.layerY+"px"
-		this.domElement.style.left = e.layerX+"px"
-	},	*/
-
-	/*placeFrame(e){
-		this.domElement.parentNode.removeChild(this.domElement)
-		this.left = e.layerX
-		this.top = e.layerY
-		let wall = document.getElementById("wall")
-		wall.removeEventListener('mousemove', onMouseMove, false)
-		wall.removeEventListener('click', this.placeFrame.bind(this), false)
-		this.renderBorder()
-		document.addEventListener('keypress', this.arrowKeyControl.bind(this))
-		this.renderFrame()
-		this.renderPrint()
-	},*/
-
 	renderPrint(){
 		let placedFrame = document.getElementById(this.id)
-		placedFrame.innerHTML = "<img src=images/prints/test.jpg class=placed-print>"
+		placedFrame.innerHTML = '<img src="images/prints/test.jpg" class="placed-print unselectable">'
 	},
 
 	renderFrame(){
@@ -139,29 +182,6 @@ const protoFrame = {
 		border.parentNode.removeChild(border)
 		renderBorder()
 	},
-
-	/*arrowKeyControl(e){
-		let moveFrame = frame.domElement
-		let moveBorder = document.getElementById("border-"+this.id)
-		switch(e.keyCode){
-			case 37:
-				moveFrame.style.left = moveFrame.offsetLeft - 1 + "px"
-				moveBorder.style.left = moveBorder.offsetLeft - 1 + "px"
-			break
-			case 38:
-				moveFrame.style.top = moveFrame.offsetTop - 1 + "px"
-				moveBorder.style.top = moveBorder.offsetTop - 1 + "px"
-			break
-			case 39:
-				moveFrame.style.left = moveFrame.offsetLeft + 1 + "px"
-				moveBorder.style.left = moveBorder.offsetLeft + 1 + "px"
-			break
-			case 40:
-				moveFrame.style.top = moveFrame.offsetTop + 1 + "px"
-				moveBorder.style.top = moveBorder.offsetTop + 1 + "px"
-			break
-		}
-	}*/
 }
 
 function frameFactory(width, height){

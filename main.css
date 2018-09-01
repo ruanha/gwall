@@ -18,19 +18,12 @@ img {
     height: 100%;
 }
 
-#begin-message{
-	position:absolute;
-	width:300px;
-	height:50px;
-	top:200px;
-	left:300px;
-	background-color:#22416B;
-	color:white;
-	border-radius: 10px; 
-	text-align: center;
-	line-height: 50px;
-	font-weight: bold;
-	opacity:0.4;
+.unselectable {
+    -webkit-user-select: none; /* Safari, Chrome */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE */
+    user-select: none; /* CSS3 */
 }
 
 .container{
@@ -85,12 +78,14 @@ img {
 	overflow: hidden;
 }
 
+
 #background{
 	position: relative;
 	max-width:100%;
 	max-height:100%;
 	border-radius: 25px;
 	opacity:0.2;
+	
 }
 
 .frames{
